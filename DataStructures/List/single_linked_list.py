@@ -262,3 +262,20 @@ def sub_list(my_list, pos, num_elements):
         count += 1
     return sub
 
+
+def shell_sort(my_list, default_sort_criteria):
+    current = my_list["first"] 
+    sorted = []
+    for i in current:
+        for j in current:
+            if current[i] < current[j]:
+                sorted.append(current[i])
+            elif current[j] < current[i]:
+                sorted.append(current[j])
+            else: 
+                sorted.append(current[i],current[j])
+            
+    return sorted
+                
+            
+    
