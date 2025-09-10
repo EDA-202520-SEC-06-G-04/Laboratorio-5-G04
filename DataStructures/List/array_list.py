@@ -176,6 +176,22 @@ def sub_list(my_list, pos_i, num_elements):
     else: 
         return None
 
-    
 
-      
+def default_sort_criteria(element_1, element_2):
+    rta = False
+    if element_1 < element_2:
+        rta = True
+    else: 
+        rta = False
+    return rta
+    
+def selection_sort(my_list, sort_crit):
+    mini = my_list["elements"][0]
+    
+    for i in range(my_list["size"]):
+        for j in range(i, my_list["size"]):
+            if sort_crit(my_list.get_element, my_list.get_elemnt) == True:
+                
+                
+                
+    
