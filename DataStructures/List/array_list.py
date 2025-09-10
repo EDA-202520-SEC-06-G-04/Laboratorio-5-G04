@@ -186,12 +186,12 @@ def default_sort_criteria(element_1, element_2):
     return rta
     
 def selection_sort(my_list, sort_crit):
-    mini = my_list["elements"][0]
     
     for i in range(my_list["size"]):
         for j in range(i, my_list["size"]):
-            if sort_crit(my_list.get_element, my_list.get_elemnt) == True:
-                
+            if sort_crit(my_list["elements"][i], my_list["elements"][j]) == True:
+                exchange(my_list, i, j)
+    return my_list
                 
                 
     
