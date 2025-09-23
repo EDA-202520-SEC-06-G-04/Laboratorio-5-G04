@@ -31,7 +31,7 @@ import time
 from DataStructures.List import array_list as al
 from DataStructures.List import single_linked_list as lt
 
-data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/GoodReads'
+data_dir = os.path.dirname(os.path.realpath('__file__')) + '\Data\GoodReads'
 
 sort_algorithm = None
 data_structure = None
@@ -90,7 +90,7 @@ def load_books(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    booksfile = data_dir + '/books.csv'
+    booksfile = os.path.join(data_dir, "books.csv")
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for book in input_file:
         add_book(catalog, book)
@@ -101,7 +101,7 @@ def load_tags(catalog):
     """
     Carga todos los tags del archivo y los agrega a la lista de tags
     """
-    tagsfile = data_dir + '/tags.csv'
+    tagsfile = os.path.join(data_dir, "tags.csv")
     input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
     for tag in input_file:
         add_tag(catalog, tag)
@@ -112,7 +112,7 @@ def load_books_tags(catalog):
     """
     Carga la información que asocia tags con libros.
     """
-    bookstagsfile = data_dir + '/book_tags.csv'  # TODO: completar la ruta del archivo de BOOKS_TAGS
+    bookstagsfile = os.path.join(data_dir, "book_tags.csv")  # TODO: completar la ruta del archivo de BOOKS_TAGS
     input_file = csv.DictReader(open(bookstagsfile, encoding='utf-8'))
     for booktag in input_file:
         add_book_tag(catalog, booktag)

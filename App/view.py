@@ -54,7 +54,7 @@ def print_menu():
     Menu de usuario
     """
     print("Bienvenido")
-    print("0- qué ipo de estrucutra de datos desea utilizar")
+    print("0- Que tipo de estrucutra de datos desea utilizar")
     #TODO: agregar opción 0 para escoger el tipo de estructura de datos y opción 5 para seleccionar el algoritmo de ordenamiento
     print("1- Cargar información en el catálogo")
     print("2- Consultar la información de un libro")
@@ -194,9 +194,10 @@ def main():
         elif int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
             bk, at, tg, bktg = load_data(control)
-            print(al.size(book)+ "Libros")
-            print(al.size(b)+ "Authors")
-            print(al.size(book)+ "Genders")
+            print(str(bk)+ " Libros")
+            print(str(at)+ " Authors")
+            print(str(tg)+ " Genders")
+            print(str(bktg) + " Asociaciones géneros' libros")
             #TODO: imprimir la cantidad de libros, autores, géneros y asociaciones de géneros a libros cargados
 
         elif int(inputs[0]) == 2:
@@ -222,7 +223,7 @@ def main():
             
         elif int(inputs[0]) == 6:
             size = input("Indique tamaño de la muestra: ")
-            size = int(size)
+            size = float(size)
             logic.set_book_sublist(control, size)
 
         elif int(inputs[0]) == 7:
