@@ -330,12 +330,12 @@ def compare_book_ids(id, book):
 
 
 def eval_ratings(book1, book2):
-    e = data_structure.get_element(book1)
-    size = data_structure.size(book1)
+    e = data_structure.get_element(book1["Avarage_rating"])
+    size = data_structure.size(book1["Avarage_rating"])
     p = e /size
     
-    e2 = data_structure.get_element(book2)
-    size2 = data_structure.size(book2)
+    e2 = data_structure.get_element(book2["Avarage_rating"])
+    size2 = data_structure.size(book2["Avarage_rating"])
     p2= e2 /size2
     
     if p > p2:
@@ -375,7 +375,8 @@ def sort_books(catalog):
         sorted_books_s = catalog["book_sublist"][4]
 
     elif sort_algorithm == 5:
-        sorted_books_s = catalog["book_sublist"][5]
+        sorted_books_s = catalog["book_sublist"][5
+                                                 ]
 
     end_time = get_time()
     delta = delta_time(start_time, end_time)

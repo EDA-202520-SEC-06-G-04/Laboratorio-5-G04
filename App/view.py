@@ -194,9 +194,10 @@ def main():
         elif int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
             bk, at, tg, bktg = load_data(control)
-            print(al.size(book)+ "Libros")
-            print(al.size(b)+ "Authors")
-            print(al.size(book)+ "Genders")
+            print(al.size(bk)+ "Libros")
+            print(al.size(at)+ "Authors")
+            print(al.size(tg)+ "Genders")
+            print(al.size(bktg) + "book genders")
             #TODO: imprimir la cantidad de libros, autores, géneros y asociaciones de géneros a libros cargados
 
         elif int(inputs[0]) == 2:
@@ -228,6 +229,8 @@ def main():
         elif int(inputs[0]) == 7:
             print("Ordenando los libros por rating ...")
             result = logic.sort_books(control)
+            result = logic.sort_books(control)
+            print(result)
             #TODO:imprimir el resultado del ordenamiento 
             print("Tiempo de ejecución:", f"{result[7]:.3f}", "[ms]")
 
