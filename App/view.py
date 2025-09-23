@@ -229,7 +229,7 @@ def main():
             print("Ordenando los libros por rating ...")
             result = logic.sort_books(control)
             #TODO:imprimir el resultado del ordenamiento 
-            print("Tiempo de ejecución:", f"{result[1]:.3f}", "[ms]")
+            print("Tiempo de ejecución:", f"{result[7]:.3f}", "[ms]")
 
         elif int(inputs[0]) == 8:
             # confirmar salida del programa
