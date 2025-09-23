@@ -29,6 +29,7 @@ import sys
 import App.logic as logic
 from DataStructures.List import array_list as al
 from DataStructures.List import single_linked_list as lt
+from DataStructures.List import single_linked_list as sl
 
 data_structure = None
 
@@ -53,11 +54,13 @@ def print_menu():
     Menu de usuario
     """
     print("Bienvenido")
+    print("0- qué ipo de estrucutra de datos desea utilizar")
     #TODO: agregar opción 0 para escoger el tipo de estructura de datos y opción 5 para seleccionar el algoritmo de ordenamiento
     print("1- Cargar información en el catálogo")
     print("2- Consultar la información de un libro")
     print("3- Consultar los libros de un autor")
     print("4- Libros por género")
+    print("5- Qué algoritmo de ordenamiento desea utilizar")
     print("6- Seleccionar muestra de libros")
     print("7- Ordenar los libros por rating")
     print("8- Salir")
@@ -143,8 +146,9 @@ def print_sort_results(sort_books, sample=3):
         # Si todavía hay libros que imprimir en la muestra.
         if sample > 0:
             # Obtener el libro en la posición actual.
-            book = data_structure.get_element(sorted_books, book_pos)
+            book = sl.get_element(sorted_books, book_pos) #toca con single linked
             # TODO: Completar la lógica para imprimir la información del libro.
+            print_book_info(book)
             # Disminuir el contador de la muestra.
             sample -= 1
 
@@ -190,6 +194,9 @@ def main():
         elif int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
             bk, at, tg, bktg = load_data(control)
+            print(al.size(book)+ "Libros")
+            print(al.size(b)+ "Authors")
+            print(al.size(book)+ "Genders")
             #TODO: imprimir la cantidad de libros, autores, géneros y asociaciones de géneros a libros cargados
 
         elif int(inputs[0]) == 2:
@@ -222,7 +229,7 @@ def main():
             print("Ordenando los libros por rating ...")
             result = logic.sort_books(control)
             #TODO:imprimir el resultado del ordenamiento 
-            print("Tiempo de ejecución:", f"{result[1]:.3f}", "[ms]")
+            print("Tiempo de ejecución:", f"{result[7]:.3f}", "[ms]")
 
         elif int(inputs[0]) == 8:
             # confirmar salida del programa
