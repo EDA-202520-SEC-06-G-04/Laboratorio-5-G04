@@ -217,7 +217,15 @@ def set_book_sublist(catalog, size):
     Crea una sublista de libros de tamaño size
     """
     books = catalog["books"]
-    catalog["book_sublist"] = data_structure.sub_list(books, 0, size)
+    total = al.size(books)
+    
+    if 0 < size <= 1:
+        num_elem = int(total * size)
+    else: 
+        num_elem = int(size)
+
+    
+    catalog["book_sublist"] = al.sub_list(books, 0, num_elem)
     return catalog
 
 #  -------------------------------------------------------------
@@ -330,24 +338,15 @@ def compare_book_ids(id, book):
 
 
 def eval_ratings(book1, book2):
-    e = data_structure.get_element(book1["Avarage_rating"])
-    size = data_structure.size(book1["Avarage_rating"])
-    p = e /size
     
-    e2 = data_structure.get_element(book2["Avarage_rating"])
-    size2 = data_structure.size(book2["Avarage_rating"])
-    p2= e2 /size2
+    rating1 = float(book1["average_rating"])
+    rating2 = float(book2["average_rating"])
     
-    if p > p2:
-        resp = book1
-        
-    elif p2 > p:
-        resp = book2
+    rta =  False
+    if rating1 > rating2:
+        rta = True
     
-    else: 
-        resp = book1
-        
-    return resp 
+    return rta
     
     # TODO: completar la función para comparar dos libros por su rating promedio, el libro 1 debe ser mayor al 2.
 #  -----------------------------------------------
@@ -363,20 +362,19 @@ def sort_books(catalog):
     # TODO: cambie el None para completar las opciones para selection_sort, insertion_sort, shell_sort, merge_sort y quick_sort 
 
     if sort_algorithm == 1:
-        sorted_books_s = catalog["book_sublist"][1]
+        sorted_books_s = al.selection_sort(sorted_books, eval_ratings)
          
     elif sort_algorithm == 2:
-        sorted_books_s = catalog["book_sublist"][2]
+        sorted_books_s = al.insertion_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 3:
-        sorted_books_s = catalog["book_sublist"][3]
+        sorted_books_s = al.shell_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 4:
-        sorted_books_s = catalog["book_sublist"][4]
+        sorted_books_s = al.merge_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 5:
-        sorted_books_s = catalog["book_sublist"][5
-                                                 ]
+        sorted_books_s = al.quick_sort(sorted_books, eval_ratings)
 
     end_time = get_time()
     delta = delta_time(start_time, end_time)
