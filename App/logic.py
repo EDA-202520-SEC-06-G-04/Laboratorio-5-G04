@@ -361,37 +361,32 @@ def eval_ratings(book1, book2):
 #  -----------------------------------------------
 
 
-def sort_books(catalog, size, sort_algorithm):
-    
-    sub_list = catalog["book_sublist"]
+def sort_books(catalog):
+
+    sorted_books = catalog["book_sublist"]
+    start_time = get_time()
+
+    # TODO: cambie el None para completar las opciones para selection_sort, insertion_sort, shell_sort, merge_sort y quick_sort 
 
     if sort_algorithm == 1:
-        sorted_books_s = data_structure.selection_sort(sub_list, eval_ratings)
         sorted_books_s = al.selection_sort(sorted_books, eval_ratings)
          
     elif sort_algorithm == 2:
-        sorted_books_s = data_structure.insertion_sort(sub_list, eval_ratings)
         sorted_books_s = al.insertion_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 3:
-        sorted_books_s = data_structure.shell_sort(sub_list, eval_ratings)
         sorted_books_s = al.shell_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 4:
-        sorted_books_s = data_structure.merge_sort(sub_list, eval_ratings)
         sorted_books_s = al.merge_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 5:
-        sorted_books_s = data_structure.quick_sort(sub_list, eval_ratings)
-    else:
-        raise ValueError("⚠️ Algoritmo de ordenamiento inválido (elige entre 1 y 5)")
         sorted_books_s = al.quick_sort(sorted_books, eval_ratings)
 
     end_time = get_time()
     delta = delta_time(start_time, end_time)
 
-    return sorted_books_s
-
+    return sorted_books_s, delta
 #  -----------------------------------------------
 #  Funciones para agregar informacion al catalogo
 #  -----------------------------------------------
