@@ -197,10 +197,7 @@ def main():
         elif int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
             bk, at, tg, bktg = load_data(control)
-            print(str(al.size(bk)) + " Libros")
-            print(str(al.size(at)) + " Authors")
-            print(str(al.size(tg)) + " Tags")
-            print(str(al.size(bktg)) + " Book-Tags")
+            
             print(str(bk)+ " Libros")
             print(str(at)+ " Authors")
             print(str(tg)+ " Genders")
