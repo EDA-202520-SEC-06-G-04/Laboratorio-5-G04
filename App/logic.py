@@ -96,9 +96,15 @@ def load_books(catalog):
     """
     booksfile = os.path.join(data_dir, "books.csv")
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    count = 0
     for book in input_file:
         add_book(catalog, book)
+        count += 1
+        if count > 500:   
+            break
+        
     return book_size(catalog), author_size(catalog)
+
 
 
 def load_tags(catalog):
@@ -229,7 +235,7 @@ def set_book_sublist(catalog, size):
         num_elem = int(size)
 
     
-    catalog["book_sublist"] = al.sub_list(books, 0, num_elem)
+    catalog["book_sublist"] = lt.sub_list(books, 0, num_elem)
     return catalog
 
 #  -------------------------------------------------------------
@@ -313,11 +319,18 @@ def book_tag_size(catalog):
 
 
 def compare_authors(author_name1, author):
-    if author_name1.lower() == author['name'].lower():
+    name1 = str(author_name1).lower()  
+    if type(author) is dict:
+        name2 = author["name"]
+    else:
+        name2 = str(author).lower()     
+
+    if name1 == name2:
         return 0
-    elif author_name1.lower() > author['name'].lower():
+    elif name1 > name2:
         return 1
-    return -1
+    else:
+        return -1
 
 
 def compare_tag_names(name, tag):
