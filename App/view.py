@@ -55,7 +55,7 @@ def print_menu():
     Menu de usuario
     """
     print("Bienvenido")
-    print("0- qué ipo de estrucutra de datos desea utilizar")
+    print("0- Que tipo de estrucutra de datos desea utilizar")
     #TODO: agregar opción 0 para escoger el tipo de estructura de datos y opción 5 para seleccionar el algoritmo de ordenamiento
     print("1- Cargar información en el catálogo")
     print("2- Consultar la información de un libro")
@@ -164,6 +164,8 @@ algo_str = """Seleccione el algoritmo de ordenamiento recursivo:
 1. Selection Sort
 2. insertion Sort
 3. shell Sort
+4. Merge sort
+5. Quick sort
 """
                  
 exit_opt_lt = ("s", "S", "1", True, "true", "True", "si", "Si", "SI")
@@ -199,6 +201,10 @@ def main():
             print(str(al.size(at)) + " Authors")
             print(str(al.size(tg)) + " Tags")
             print(str(al.size(bktg)) + " Book-Tags")
+            print(str(bk)+ " Libros")
+            print(str(at)+ " Authors")
+            print(str(tg)+ " Genders")
+            print(str(bktg) + " Asociaciones géneros' libros")
             #TODO: imprimir la cantidad de libros, autores, géneros y asociaciones de géneros a libros cargados
 
         elif int(inputs[0]) == 2:
@@ -224,14 +230,15 @@ def main():
             
         elif int(inputs[0]) == 6:
             size = input("Indique tamaño de la muestra: ")
-            size = int(size)
+            size = float(size)
             logic.set_book_sublist(control, size)
 
         elif int(inputs[0]) == 7:
             print("Ordenando los libros por rating ...")
             result = logic.sort_books(control)
+            print(result)
             #TODO:imprimir el resultado del ordenamiento 
-            print("Tiempo de ejecución:", f"{result[7]:.3f}", "[ms]")
+            print("Tiempo de ejecución:", f"{result[1]:.3f}", "[ms]")
 
         elif int(inputs[0]) == 8:
             # confirmar salida del programa

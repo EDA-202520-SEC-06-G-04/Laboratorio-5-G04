@@ -35,6 +35,7 @@ from DataStructures.List import single_linked_list as lt
 
 base_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 data_dir = os.path.join(base_dir, 'Data', 'GoodReads')
+data_dir = os.path.dirname(os.path.realpath('__file__')) + '\Data\GoodReads'
 
 sort_algorithm = None
 data_structure = None
@@ -93,7 +94,7 @@ def load_books(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    booksfile = data_dir + '/books.csv'
+    booksfile = os.path.join(data_dir, "books.csv")
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for book in input_file:
         add_book(catalog, book)
@@ -104,7 +105,7 @@ def load_tags(catalog):
     """
     Carga todos los tags del archivo y los agrega a la lista de tags
     """
-    tagsfile = data_dir + '/tags.csv'
+    tagsfile = os.path.join(data_dir, "tags.csv")
     input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
     for tag in input_file:
         add_tag(catalog, tag)
@@ -115,7 +116,7 @@ def load_books_tags(catalog):
     """
     Carga la información que asocia tags con libros.
     """
-    bookstagsfile = data_dir + '/book_tags.csv'  # TODO: completar la ruta del archivo de BOOKS_TAGS
+    bookstagsfile = os.path.join(data_dir, "book_tags.csv")  # TODO: completar la ruta del archivo de BOOKS_TAGS
     input_file = csv.DictReader(open(bookstagsfile, encoding='utf-8'))
     for booktag in input_file:
         add_book_tag(catalog, booktag)
@@ -220,7 +221,15 @@ def set_book_sublist(catalog, size):
     Crea una sublista de libros de tamaño size
     """
     books = catalog["books"]
-    catalog["book_sublist"] = data_structure.sub_list(books, 0, size)
+    total = al.size(books)
+    
+    if 0 < size <= 1:
+        num_elem = int(total * size)
+    else: 
+        num_elem = int(size)
+
+    
+    catalog["book_sublist"] = al.sub_list(books, 0, num_elem)
     return catalog
 
 #  -------------------------------------------------------------
@@ -337,6 +346,15 @@ def eval_ratings(book1, book2):
     r2 = float(book2["average_rating"])
     return r1 > r2
     
+    rating1 = float(book1["average_rating"])
+    rating2 = float(book2["average_rating"])
+    
+    rta =  False
+    if rating1 > rating2:
+        rta = True
+    
+    return rta
+    
     # TODO: completar la función para comparar dos libros por su rating promedio, el libro 1 debe ser mayor al 2.
 #  -----------------------------------------------
 # Funciones de ordenamiento
@@ -349,16 +367,28 @@ def sort_books(catalog, size, sort_algorithm):
 
     if sort_algorithm == 1:
         sorted_books_s = data_structure.selection_sort(sub_list, eval_ratings)
+        sorted_books_s = al.selection_sort(sorted_books, eval_ratings)
+         
     elif sort_algorithm == 2:
         sorted_books_s = data_structure.insertion_sort(sub_list, eval_ratings)
+        sorted_books_s = al.insertion_sort(sorted_books, eval_ratings)
+
     elif sort_algorithm == 3:
         sorted_books_s = data_structure.shell_sort(sub_list, eval_ratings)
+        sorted_books_s = al.shell_sort(sorted_books, eval_ratings)
+
     elif sort_algorithm == 4:
         sorted_books_s = data_structure.merge_sort(sub_list, eval_ratings)
+        sorted_books_s = al.merge_sort(sorted_books, eval_ratings)
+
     elif sort_algorithm == 5:
         sorted_books_s = data_structure.quick_sort(sub_list, eval_ratings)
     else:
         raise ValueError("⚠️ Algoritmo de ordenamiento inválido (elige entre 1 y 5)")
+        sorted_books_s = al.quick_sort(sorted_books, eval_ratings)
+
+    end_time = get_time()
+    delta = delta_time(start_time, end_time)
 
     return sorted_books_s
 
