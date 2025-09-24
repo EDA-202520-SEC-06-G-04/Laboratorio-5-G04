@@ -6,7 +6,7 @@ class Node:
 
 class SingleLinkedList:
     def __init__(self):
-        self._head = None   # usamos _head para evitar choque con método
+        self._head = None   
         self.size = 0   
 
     def first(self):
@@ -150,7 +150,7 @@ def delete_element(my_list, pos):
         raise IndexError("list index out of range")
 
     if pos == 0:
-        # eliminar cabeza
+        
         removed = my_list["first"]
         my_list["first"] = removed["next"]
         if my_list["size"] == 1:
@@ -162,7 +162,7 @@ def delete_element(my_list, pos):
         removed = prev["next"]
         prev["next"] = removed["next"] if removed else None
         if pos == my_list["size"] - 1:
-            # si borramos el último, actualizar referencia last
+            
             my_list["last"] = prev
 
     my_list["size"] -= 1
@@ -194,7 +194,7 @@ def remove_last(my_list):
     cur = my_list["first"]
     while cur["next"] is not my_list["last"]:
         cur = cur["next"]
-    # cur es el penúltimo
+   
     removed_info = my_list["last"]["info"]
     cur["next"] = None
     my_list["last"] = cur
@@ -238,12 +238,14 @@ def exchange(my_list, pos_1, pos_2):
 
 
 def is_present(my_list, element, cmp_function):
-    current = my_list["first"]   # acceder al primer nodo
+    current = my_list["first"]   
+    pos = 0
     while current is not None:
         if cmp_function(current["info"], element) == 0:
-            return 1
+            return pos   
         current = current["next"]
-    return 0
+        pos += 1
+    return -1
 
 
 
@@ -262,3 +264,210 @@ def sub_list(my_list, pos, num_elements):
         count += 1
     return sub
 
+
+def default_sort_criteria(element_1, element_2):
+    if element_1<element_2:
+        return True
+    else:
+        return False
+
+def selection_sort(my_list, sort_crit):
+
+    current = my_list["first"]
+
+    while current is not None:
+        min_node = current
+        next_node = current["next"]
+
+        while next_node is not None:
+            if sort_crit(next_node["info"], min_node["info"]):
+                min_node = next_node
+            next_node = next_node["next"]
+
+        if min_node != current:
+            current["info"], min_node["info"] = min_node["info"], current["info"]
+
+        current = current["next"]
+
+    return my_list
+
+
+def insertion_sort(my_list, sort_crit):
+
+    if my_list["size"] <= 1:
+        return my_list
+
+    sorted_head = my_list["first"]
+    current = sorted_head["next"]
+    sorted_head["next"] = None
+
+    while current:
+        next_node = current["next"]
+
+        if sort_crit(current["info"], sorted_head["info"]):
+            current["next"] = sorted_head
+            sorted_head = current
+        else:
+            search = sorted_head
+            while search["next"] and not sort_crit(current["info"], search["next"]["info"]):
+                search = search["next"]
+
+            current["next"] = search["next"]
+            search["next"] = current
+
+        current = next_node
+
+    my_list["first"] = sorted_head
+    count = 0
+    node = my_list["first"]
+    last = None
+    while node:
+        count += 1
+        last = node
+        node = node["next"]
+    my_list["size"] = count
+    my_list["last"] = last
+
+    return my_list
+
+
+def shell_sort(my_list, sort_crit):
+
+    a = []
+    node = my_list["first"]
+    while node:
+        a.append(node["info"])
+        node = node["next"]
+
+    n = len(a)
+    gap = n // 2
+    while gap > 0:
+        for i in range(gap, n):
+            temp = a[i]
+            j = i
+            while j >= gap and sort_crit(temp, a[j - gap]):
+                a[j] = a[j - gap]
+                j -= gap
+            a[j] = temp
+        gap //= 2
+
+    node = my_list["first"]
+    i = 0
+    while node:
+        node["info"] = a[i]
+        node = node["next"]
+        i += 1
+
+    return my_list
+
+
+def merge_sort(my_list, sort_crit):
+    
+    def split(head):
+        slow = head
+        fast = head["next"]
+        while fast and fast["next"]:
+            slow = slow["next"]
+            fast = fast["next"]["next"]
+        middle = slow["next"]
+        slow["next"] = None
+        return head, middle
+
+    def merge(left, right):
+        dummy = {"info": None, "next": None}
+        tail = dummy
+        while left and right:
+            if sort_crit(left["info"], right["info"]):
+                tail["next"] = left
+                left = left["next"]
+            else:
+                tail["next"] = right
+                right = right["next"]
+            tail = tail["next"]
+        tail["next"] = left if left else right
+        return dummy["next"]
+
+    def merge_sort_nodes(node):
+        if not node or not node["next"]:
+            return node
+        left, right = split(node)
+        left = merge_sort_nodes(left)
+        right = merge_sort_nodes(right)
+        return merge(left, right)
+
+    my_list["first"] = merge_sort_nodes(my_list["first"])
+
+    count = 0
+    node = my_list["first"]
+    last = None
+    while node:
+        count += 1
+        last = node
+        node = node["next"]
+    my_list["size"] = count
+    my_list["last"] = last
+
+    return my_list
+
+
+def quick_sort(my_list, sort_crit):
+
+    def partition(head):
+        if not head or not head["next"]:
+            return None, head, None
+
+        pivot = head
+        current = head["next"]
+
+        less_dummy = {"info": None, "next": None}
+        greater_dummy = {"info": None, "next": None}
+        less_tail, greater_tail = less_dummy, greater_dummy
+
+        while current:
+            next_node = current["next"]  
+            current["next"] = None      
+
+            if sort_crit(current["info"], pivot["info"]):
+                less_tail["next"] = current
+                less_tail = current
+            else:
+                greater_tail["next"] = current
+                greater_tail = current
+
+            current = next_node
+
+        return less_dummy["next"], pivot, greater_dummy["next"]
+
+    def quick_sort_nodes(node):
+        if not node or not node["next"]:
+            return node
+
+        less, pivot, greater = partition(node)
+        left_sorted = quick_sort_nodes(less)
+        right_sorted = quick_sort_nodes(greater)
+
+        new_head = left_sorted if left_sorted else pivot
+
+        tail = left_sorted
+        while tail and tail["next"]:
+            tail = tail["next"]
+
+        if tail:
+            tail["next"] = pivot
+
+        pivot["next"] = right_sorted
+        return new_head
+
+    my_list["first"] = quick_sort_nodes(my_list["first"])
+
+    count = 0
+    node = my_list["first"]
+    last = None
+    while node:
+        count += 1
+        last = node
+        node = node["next"]
+    my_list["size"] = count
+    my_list["last"] = last
+
+    return my_list

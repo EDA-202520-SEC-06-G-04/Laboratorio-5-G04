@@ -24,6 +24,8 @@
  * Dario Correal
  * Lina Ojeda
  """
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import csv
 import os
@@ -31,7 +33,8 @@ import time
 from DataStructures.List import array_list as al
 from DataStructures.List import single_linked_list as lt
 
-data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/GoodReads'
+base_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+data_dir = os.path.join(base_dir, 'Data', 'GoodReads')
 
 sort_algorithm = None
 data_structure = None
@@ -330,24 +333,9 @@ def compare_book_ids(id, book):
 
 
 def eval_ratings(book1, book2):
-    e = data_structure.get_element(book1)
-    size = data_structure.size(book1)
-    p = e /size
-    
-    e2 = data_structure.get_element(book2)
-    size2 = data_structure.size(book2)
-    p2= e2 /size2
-    
-    if p > p2:
-        resp = book1
-        
-    elif p2 > p:
-        resp = book2
-    
-    else: 
-        resp = book1
-        
-    return resp 
+    r1 = float(book1["average_rating"])
+    r2 = float(book2["average_rating"])
+    return r1 > r2
     
     # TODO: completar la función para comparar dos libros por su rating promedio, el libro 1 debe ser mayor al 2.
 #  -----------------------------------------------
@@ -355,33 +343,24 @@ def eval_ratings(book1, book2):
 #  -----------------------------------------------
 
 
-def sort_books(catalog):
-
-    sorted_books = catalog["book_sublist"]
-    start_time = get_time()
-
-    # TODO: cambie el None para completar las opciones para selection_sort, insertion_sort, shell_sort, merge_sort y quick_sort 
+def sort_books(catalog, size, sort_algorithm):
+    
+    sub_list = catalog["book_sublist"]
 
     if sort_algorithm == 1:
-        sorted_books_s = catalog["book_sublist"][1]
-         
+        sorted_books_s = data_structure.selection_sort(sub_list, eval_ratings)
     elif sort_algorithm == 2:
-        sorted_books_s = catalog["book_sublist"][2]
-
+        sorted_books_s = data_structure.insertion_sort(sub_list, eval_ratings)
     elif sort_algorithm == 3:
-        sorted_books_s = catalog["book_sublist"][3]
-
+        sorted_books_s = data_structure.shell_sort(sub_list, eval_ratings)
     elif sort_algorithm == 4:
-        sorted_books_s = catalog["book_sublist"][4]
-
+        sorted_books_s = data_structure.merge_sort(sub_list, eval_ratings)
     elif sort_algorithm == 5:
-        sorted_books_s = catalog["book_sublist"][5]
+        sorted_books_s = data_structure.quick_sort(sub_list, eval_ratings)
+    else:
+        raise ValueError("⚠️ Algoritmo de ordenamiento inválido (elige entre 1 y 5)")
 
-    end_time = get_time()
-    delta = delta_time(start_time, end_time)
-
-    return sorted_books_s, delta
-
+    return sorted_books_s
 
 #  -----------------------------------------------
 #  Funciones para agregar informacion al catalogo
