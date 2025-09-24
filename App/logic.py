@@ -369,19 +369,19 @@ def sort_books(catalog):
     # TODO: cambie el None para completar las opciones para selection_sort, insertion_sort, shell_sort, merge_sort y quick_sort 
 
     if sort_algorithm == 1:
-        sorted_books_s = al.selection_sort(sorted_books, eval_ratings)
+        sorted_books_s = lt.selection_sort(sorted_books, eval_ratings)
          
     elif sort_algorithm == 2:
-        sorted_books_s = al.insertion_sort(sorted_books, eval_ratings)
+        sorted_books_s = lt.insertion_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 3:
-        sorted_books_s = al.shell_sort(sorted_books, eval_ratings)
+        sorted_books_s = lt.shell_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 4:
-        sorted_books_s = al.merge_sort(sorted_books, eval_ratings)
+        sorted_books_s = lt.merge_sort(sorted_books, eval_ratings)
 
     elif sort_algorithm == 5:
-        sorted_books_s = al.quick_sort(sorted_books, eval_ratings)
+        sorted_books_s = lt.quick_sort(sorted_books, eval_ratings)
 
     end_time = get_time()
     delta = delta_time(start_time, end_time)
